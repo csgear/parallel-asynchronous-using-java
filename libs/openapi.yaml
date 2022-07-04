@@ -1,0 +1,274 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: http://localhost:8080/movies
+    description: Generated server url
+paths:
+  /v1/reviews/{id}:
+    put:
+      tags:
+        - review-controller
+      operationId: updateReview
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Review'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Review'
+    delete:
+      tags:
+        - review-controller
+      operationId: deleteReviewById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: integer
+                format: int32
+  /v1/movie_infos/{id}:
+    get:
+      tags:
+        - movie-info-controller
+      operationId: movieInfoById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MovieInfo'
+    put:
+      tags:
+        - movie-info-controller
+      operationId: updateMovieInfo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MovieInfo'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MovieInfo'
+    delete:
+      tags:
+        - movie-info-controller
+      operationId: deleteMovieInfo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: integer
+                format: int32
+  /v1/reviews:
+    get:
+      tags:
+        - review-controller
+      operationId: getAllReviews
+      parameters:
+        - name: movieInfoId
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Review'
+    post:
+      tags:
+        - review-controller
+      operationId: createReview
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Review'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Review'
+    delete:
+      tags:
+        - review-controller
+      operationId: deleteAllReviews
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: integer
+                format: int32
+  /v1/movie_infos:
+    get:
+      tags:
+        - movie-info-controller
+      operationId: movieInfos
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MovieInfo'
+    post:
+      tags:
+        - movie-info-controller
+      operationId: createMovieInfo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MovieInfo'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MovieInfo'
+    delete:
+      tags:
+        - movie-info-controller
+      operationId: deleteAllMovieInfo
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: integer
+                format: int32
+  /v1/reviews/{review_id}:
+    get:
+      tags:
+        - review-controller
+      operationId: getReviewById
+      parameters:
+        - name: review_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Review'
+components:
+  schemas:
+    Review:
+      required:
+        - movieInfoId
+        - rating
+      type: object
+      properties:
+        reviewId:
+          type: integer
+          format: int64
+        movieInfoId:
+          type: integer
+          format: int64
+        rating:
+          type: number
+          format: double
+        comment:
+          type: string
+    MovieInfo:
+      required:
+        - name
+        - year
+      type: object
+      properties:
+        movieInfoId:
+          type: integer
+          format: int64
+        name:
+          type: string
+        year:
+          type: integer
+          format: int32
+        cast:
+          maxItems: 2147483647
+          minItems: 1
+          type: array
+          items:
+            type: string
+        release_date:
+          type: string
+          format: date
