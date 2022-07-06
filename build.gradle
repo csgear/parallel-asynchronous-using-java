@@ -25,6 +25,7 @@ dependencies {
     //lombok
     compileOnly('org.projectlombok:lombok:1.18.24')
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    implementation('io.projectreactor:reactor-core:3.4.18')
 
     // StopWatch
     implementation 'org.apache.commons:commons-lang3:3.12.0'
@@ -41,6 +42,7 @@ dependencies {
 
     //junit5-dependencies
     testImplementation('org.junit.jupiter:junit-jupiter:5.8.2')
+    testImplementation('io.projectreactor:reactor-test:3.4.18')
     testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.2.4'
     testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.2.4'
 }
